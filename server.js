@@ -10,9 +10,12 @@
     const mongoose = require('mongoose')
     const flash = require('connect-flash');
     const passport = require('passport');
+    const socketIO = require('socket.io');
+
     const container = require('./container');
+  
     const { response, Router } = require('express');
-const { homedir } = require('os');
+    const { homedir } = require('os');
 
     container.resolve(function(users, _ , admin){
  
@@ -25,6 +28,8 @@ const { homedir } = require('os');
     function SetupExpress(){
         const app = express();
         const server = http.createServer(app);
+        const io = socketIO(server);
+        const io = require('socket.io')(server);
         
         server.listen(3000, function(){
             console.log('Listening to port No 3000');
