@@ -1,11 +1,11 @@
 const AWS = require('aws-sdk');
 const multer = require('multer');
-const multer = require('multer-s3');
+const multerS3 = require('multer-s3');
 
 AWS.config.update({
-    accessKey:'',
-    secretAccessKey:'',
-    region: 'eu-central-1'
+    accessKeyId:'AKIAIX6OWLCDCNUV4UNQ',
+    secretAccessKey:'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',
+    region: 'ap-south-1'
 });
 
 const S0 = new AWS.S3({});
@@ -27,4 +27,4 @@ const upload = multer({
     })
 })
 
-exports.Upload =upload;
+exports.Upload = upload;

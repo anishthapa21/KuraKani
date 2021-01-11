@@ -11,7 +11,8 @@
     const flash = require('connect-flash');
     const passport = require('passport');
     const container = require('./container');
-    const { response } = require('express');
+    const { response, Router } = require('express');
+const { homedir } = require('os');
 
     container.resolve(function(users, _ , admin){
  
@@ -35,6 +36,7 @@
     const router = require('express-promise-router')();
     users.SetRouting(router);
     admin.SetRouting(router);
+    home.SetRouting(router);
     app.use(router);
     }
   

@@ -6,9 +6,12 @@ const container = dependable.container();
 const simpleDependecies = [
     ['_', 'lodash'],
     ['passport', 'passport'],
+    ['formidable','formidable'],
     ['validator', 'express-validator'],
-    ['Clubs','./models/clubs.js'],
-    ['aws','./helpers/AWSUpload.js']
+    ['async','async'],
+    ['Club','./models/clubs'],
+    ['aws','./helpers/AWSUpload'],
+  
 ];
 
 simpleDependecies.forEach(function(val){
