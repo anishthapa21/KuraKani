@@ -5,27 +5,44 @@ const User = require('../models/user');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const secret = require('../secret/secretFile');
 
-passport.serializeUser((user,done) => {
+passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
-passport.deserializationUser((id, done) => {
+passport.deserializeUser((id, done) => {
     User.findById(id, (err, user) => {
-        done(err,uesr);
-    })
+        done(err, user);
+    });
 });
 
-passport.use(new FacebbokStrategy({
-    clientID: secret.facebook.clientID,
-    clientSecret: secret.facebook.clientSecret,
-    profileFields: {'email', 'displayName', 'photos'},
+passport.use(new FacebookStrategy({
+    clientID: process.env.FB_CLIENT_ID,
+    clientSecret: process.env.FB_CLIENT_SECRET,
+    profileFields: ['email', 'displayName', 'photos'],
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
-    passReqtoCallback: true
-
-}, (req, token, refreshToken, profile, done) =>{
-    User.findOne({facebook:profile.id}, (err,user) => {
-        if(err) {
-            return done(err);
+    passReqToCallback: true
+    
+}, (req, token, refreshToken, profile, done) => {
+    
+    User.findOne({facebook:profile.id}, (err, user) => {
+       if(err){
+           return done(err);
+       }
+        
+        if(user){
+            return done(null, user);
+        }else{
+            const newUser = new User();
+            newUser.facebook = profile.id;
+            newUser.fullname = profile.displayName;
+            newUser.username = profile.displayName;
+            newUser.email = profile._json.email;
+            newUser.userImage = 'https://graph.facebook.com/'+profile.id+'/picture?type=large';
+            newUser.fbTokens.push({token:token});
+            
+            newUser.save((err) => {
+                return done(null, newUser);
+            })
         }
     })
 }));

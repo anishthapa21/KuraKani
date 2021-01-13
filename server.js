@@ -10,14 +10,13 @@
     const mongoose = require('mongoose')
     const flash = require('connect-flash');
     const passport = require('passport');
-    const socketIO = require('socket.io');
-
     const container = require('./container');
-  
     const { response, Router } = require('express');
     const { homedir } = require('os');
+    const socketIO = require('socket.io');
+    const{Users} = require('./helpers/UsersClass');
 
-    container.resolve(function(users, _ , admin){
+    container.resolve(function(users, _ , admin, group ){
  
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/KuraKani', {useNewUrlParser: true, useUnifiedTopology:true}); // updated: before(useMongoClient:ture)
@@ -29,19 +28,20 @@
         const app = express();
         const server = http.createServer(app);
         const io = socketIO(server);
-        const io = require('socket.io')(server);
         
         server.listen(3000, function(){
             console.log('Listening to port No 3000');
         });
 
     ConfigureExpress(app);
+    require('./socket/groupchat')(io);
 
           //Router Setup
     const router = require('express-promise-router')();
     users.SetRouting(router);
     admin.SetRouting(router);
     home.SetRouting(router);
+    group.SetRouting(router);
     app.use(router);
     }
   
