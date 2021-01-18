@@ -1,15 +1,15 @@
+  
 const mongoose = require('mongoose');
 
 var messageSchema = mongoose.Schema({
-    message: {typr: String},
+    message: {type: String},
     sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     receiver: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     senderName: {type: String},
     receiverName: {type: String},
     userImage: {type: String, default: 'defaultPic.png'},
-    IsRead: {type: Boolean, default: false},
-    createdAt: {type: Date, deafault: Date.now},
-
+    isRead: {type: Boolean, default: false},
+    createdAt: {type: Date, default: Date.now}
 });
 
-module.experts = mongoose.model('Message', messageSchema);
+module.exports = mongoose.model('Message', messageSchema);

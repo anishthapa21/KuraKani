@@ -17,6 +17,11 @@ $(document).ready(function(){
         }
 
         socket.emit('join PM', params);
+
+        socket.on('message display', function(){
+            $('#reload').load(location.href + ' #reload');
+
+        });
     });
 
     socket.on('new message', function(data){
@@ -44,21 +49,24 @@ $(document).ready(function(){
             }, function(){
                 $('#msg').val('');
             });
-            $.ajax ('#send-message').on('click', function(){
-                var message= $('#msg').val();
+            
 
-                $.ajax({
-                    url: '/chat/'+paramOne,
-                    type: 'POST',
-                    data: {
-                        message: message
-                    },
-                    success: function(){
-                        $('#msg').val('');  
-                    }
-                })
-            });
         }
+    });
+
+    $('#send-message').on('click' , function(){
+        var message = ('#msg').val();
+
+        $ajax({
+            url: '/chat/'+paramOne,
+            type: 'POST',
+            data: {
+                message: message
+            },
+            success:  function(){
+                $('msg').val('');
+            }
+        })
     });
 });
 

@@ -112,18 +112,31 @@
 
                             <div class="chat_area">
                                 <ul id="messages" class="list-unstyled">
-                                   <% _.forEach(groupMsg, function(val) { %>
-                                   <% if(groupName === val.name) {%>
+                                    <% if(chats.length > 0) {%>
+                                   <% _.forEach(chats, function(val) { %>
+                                    <% if(name === val.receiver.username.toLowercase()) {%> 
                                     <li class="left">
                                        <span class="chat-img1 pull-left">
                                            <img src="http://placehold.it/300*300" class="img-circle" alt="">
                                        </span>
                                        <div class="chat-body1">
-                                           <span class="chat-name"><%= val.sender.username %></span>
+                                           <span class="chat-name"><%= val.senderName %></span>
                                            <br>
-                                           <%= val.body %>
+                                           <%= val.message %>
                                        </div>
                                     </li>
+                                    <% } else if(name === val.sender.username.toLowercase()) { %>
+                                        <li class="left">
+                                            <span class="chat-img1 pull-left">
+                                                <img src="http://placehold.it/300*300" class="img-circle" alt="">
+                                            </span>
+                                            <div class="chat-body1">
+                                                <span class="chat-name"><%= val.senderName %></span>
+                                                <br>
+                                                <%= val.message %>
+                                            </div>
+                                         </li>
+                                    <% } %>
                                     <% } %>
                                     <% }) %>
 
