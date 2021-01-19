@@ -46,9 +46,9 @@ module.exports = function(Users, async, Message, FriendResult, Group){
                 },
 
                 function(callback){
-                    Group.find{[]}
+                    Group.find({})
                         .populate('sender')
-                        .exec((err.result) => {
+                        .exec((err, result) => {
                             callback(err, result);
                         });
                 }

@@ -30,29 +30,33 @@ module.exports = function(async, Club, _, Users, Message, FriendResult){
                 },
                 function(callback){
                     const nameRegex = new RegExp("^" + req.user.username.toLowerCase(), "i")
-                    Message.aggregate(
-                        {$match: {$or: [{'senderName':nameRegex},
-                        {'receiverName':nameRegex}]}},
-                        {$sort:{'createdAt':-1}},
+                    Message.aggregate([
+                        {$match:{$or:[{"senderName":nameRegex}, {"receiverName":nameRegex}]}},
+                        {$sort:{"createdAt":-1}},
                         {
-                            $group:{
-                                "_id":{
-                                    "last_message_between":{
-                                        $cond: [
-                                            {
-                                                $gt:[
-                                                    {$substr:["$senderName",0,1]},
-                                                    {$substr:["$receiverName",0,1]}]
-                                            },
-                                            {$concat:["$senderName"," and ","$receiverName"]},
-                                            {$concat:["$receiverName"," and ","$senderName"]}
-                                        ]
-                                    }
-                                },"body": {$first:"$$ROOT"}
+                            $group:{"_id":{
+                            "last_message_between":{
+                                $cond:[
+                                    {
+                                        $gt:[
+                                        {$substr:["$senderName",0,1]},
+                                        {$substr:["$receiverName",0,1]}]
+                                    },
+                                    {$concat:["$senderName"," and ","$receiverName"]},
+                                    {$concat:["$receiverName"," and ","$senderName"]}
+                                ]
                             }
-                        }, function(err, newResult){
-                            // console.log(newResult);
-                            callback(err,newResult);
+                            }, "body": {$first:"$$ROOT"}
+                            }
+                        }], function(err, newResult){
+                            const arr = [
+                                {path: 'body.sender', model: 'User'},
+                                {path: 'body.receiver', model: 'User'}
+                            ];
+                            
+                            Message.populate(newResult, arr, (err, newResult1) => {
+                                callback(err, newResult1);
+                            });
                         }
                     )
                 },
@@ -93,11 +97,13 @@ module.exports = function(async, Club, _, Users, Message, FriendResult){
                          console.log(count);
                          callback(err, count);
                      });
-                 }, 
-                 ], (err, results) =>{
+                 },
+                 
+             ], (err, results) =>{
                  res.redirect('/home');
              });
-             FriendResult.PostRequest(req,res, '/home');
+
+             FriendResult.PostRequest(req, res, '/home');
          },
          logout: function(req, res){
              req.logout();

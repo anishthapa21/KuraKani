@@ -17,7 +17,7 @@ const socketIO = require('socket.io');
 const {Users} = require('./helpers/UsersClass');
 const {Global} = require('./helpers/Global');
 
-container.resolve(function(users, _ , admin, group, results, privatechat ){
+container.resolve(function(users, _ , admin, group, results, privatechat, profile, interests ){
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/KuraKani', {useNewUrlParser: true, useUnifiedTopology:true}); // updated: before(useMongoClient:ture)
@@ -48,6 +48,8 @@ home.SetRouting(router);
 group.SetRouting(router);
 results.setRouting(router);
 privatechat.setRouting(router);
+profile.SetRouting(router);
+interests.setRouting(router);
 
 app.use(router);
 }

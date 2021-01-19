@@ -1,1 +1,1 @@
-Footballkik is a chat application for football fans.
+KuraKani is a chat application for football fans.

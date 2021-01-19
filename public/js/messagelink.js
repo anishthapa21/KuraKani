@@ -14,23 +14,26 @@ $(document).ready(function(){
         }
 
         socket.emit('join PM', params);
+
+        socket.on('new refresh', function () {
+            $('#reload').load(location.href + ' #reload');
+        });
     });
 
-    socket.on('new refresh', function(){
-        $('#reload').load(location.href + ' #reload');
-    });
-    $(document).on ('click', '#messagelink', function(){
+ 
+    $(document).on('click', '#messageLink',function(){
         var chatId = $(this).data().value;
-        
-        $.ajax({
-            url:'/chat/'+paramOne,
-            type:'POST',
+
+        $ajax({
+            url: '/chat/'+paramOne,
+            type: 'POST',
             data: {chatId: chatId},
             success: function(){
 
             }
         });
-        socket.emit('refresh',  {});
+
+        socket.emit('refresh',{});
     });
 });
 
@@ -41,12 +44,3 @@ function swap(input, value_1, value_2){
     input[value_2] = temp;
 
 }
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,6 @@
-module.exports = function(async, Club, Users){
+const { result } = require("lodash");
+
+module.exports = function(async, Club){
     return {
         SetRouting: function(router){
             router.get('/results', this.getResults);
@@ -26,44 +28,6 @@ module.exports = function(async, Club, Users){
                     dataChunk.push(res1.slice(i, i+chunkSize));  
                 }
                 res.render('results', {title: 'KuraKani - Results', user: req.user, chunks:dataChunk})
-            })
-        },
-
-        viewMembers: function(req, res){
-            async.parallel([
-                function(callback){
-                    
-                    Users.find({}, (err, result)=> {
-                        callback(err, result);
-                    });
-                }
-            ], (err,results)=>{
-                const res1 = results[0];
-                const dataChunk = [];
-                const chunkSize = 4;
-                for (let i=0; i<res1.length; i += chunkSize){
-                    dataChunk.push(res1.slice(i, i+chunkSize));  
-                }
-                res.render('members', {title: 'KuraKani - Results', user: req.user, chunks:dataChunk})
-            })
-        },
-        searchMembers: function(req, res){
-            async.parallel([
-                function(callback){
-                    const regex = new RegExp((req.body.username), 'gi');
-
-                    Users.find({'username':regex}, (err, result)=> {
-                        callback(err, result);
-                    });
-                }
-            ], (err,results)=>{
-                const res1 = results[0];
-                const dataChunk = [];
-                const chunkSize = 4;
-                for (let i=0; i<res1.length; i += chunkSize){
-                    dataChunk.push(res1.slice(i, i+chunkSize));  
-                }
-                res.render('members', {title: 'KuraKani - Results', user: req.user, chunks:dataChunk})
             })
         }
     }

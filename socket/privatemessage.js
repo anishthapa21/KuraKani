@@ -16,8 +16,7 @@ module.exports = function(io){
             callback();
         });
         socket.on('refresh', function(){
-            io.emit('new refresh',{});
+            io.emit('new refresh', {});
         });
-
     });
 }
