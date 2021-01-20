@@ -38,8 +38,7 @@
 
                                             </div>
                                             <div class="user cover-img">
-                                                <img src="https://kurakani.s3.amazonaws.com/<%= .userImage %>"
-                                                class= "" alt="">
+                                                <img src="#">
                                             </div>
                                             <div class="content">
                                                 <div class="main">
@@ -113,26 +112,27 @@
 
                             <div class="chat_area">
                                 <ul id="messages" class="list-unstyled">
-                                    <% _.forEach(groupMsg, function(val) { %>
-                                      <% if(groupName === val.name) {%>  
+                                   <% _.forEach(groupMsg, function(val) { %>
+                                   <% if(groupName === val.name) {%>
                                     <li class="left">
                                        <span class="chat-img1 pull-left">
-                                           <img src="https://kurakani.s3.amazonaws.com/<%= val.sender.userImage %>" class="img-circle" alt="">
+                                           <img src="http://placehold.it/300*300" class="img-circle" alt="">
                                        </span>
                                        <div class="chat-body1">
                                            <span class="chat-name"><%= val.sender.username %></span>
                                            <br>
-                                          <%= val.body %>
+                                           <%= val.body %>
                                        </div>
                                     </li>
-                                    <% }%>
+                                    <% } %>
                                     <% }) %>
+
                                 </ul>
                                 
                                 <script id="message-template" type="text/template">
                                     <li class="left">
                                        <span class="chat-img1 pull-left">
-                                           <img src="https://kurakani.s3.amazonaws.com/{{userImage}}" class="img-circle" alt="">
+                                           <img src="#">
                                        </span>
                                        <div class="chat-body1">
                                            <span class="chat-name">{{ sender }}</span>

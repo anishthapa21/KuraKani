@@ -39,8 +39,14 @@ module.exports = function(Users, async, Message, FriendResult, Group){
                                 },"body": {$first:"$$ROOT"}
                             }
                         }, function(err, newResult){
-                            // console.log(newResult);
-                            callback(err,newResult);
+                           const arr = [
+                            {path: 'body.sender', model: 'user'},
+                            {path: 'body.receiver', model: 'user'}
+                        ];
+
+                        Message.populate(newResult, arr, (err, newResult1) => {
+                            callback(err, newResult1);
+                        });
                         }
                     )
                 },

@@ -21,9 +21,6 @@ $(document).ready(function(){
         socket.on('message display', function(){
             $('#reload').load(location.href + ' #reload');
 
-            socket.on('new refresh', function () {
-                $('#reload').load(location.href + ' #reload');
-            });
         });
     });
 
