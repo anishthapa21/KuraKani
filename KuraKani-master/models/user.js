@@ -5,7 +5,7 @@ const userSchema = mongoose.Schema({
     fullname: {type:String, unique: true, default: ''},
     email: {type:String, unique: true},
     password: {type:String,default: ''},
-    userImage: {type:String, default:'default.png'}, 
+    userImage: {type:String, default:'defaultPic.png'}, 
     facebook: {type:String, default:''},
     fbTokens: Array,
     google: {type:String, default:''},
@@ -20,7 +20,20 @@ const userSchema = mongoose.Schema({
         friendId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
         friendName: {type: string, default:''}
     }],
-    totalRequest: {type: Number, default: 0}
+    totalRequest: {type: Number, default: 0},
+    gender: {type: String, default: ''}, 
+    country: {type: String, default: ''},
+    mantra: {type: String, default: ''},
+    favNationalTeam: [{
+        teamName: {type: String, default: ''}
+    }],
+    favPlayer: [{
+        playerName: {type: String, default: ''}
+    }],
+    favClub:[{
+        clubName: {type: String}
+    }],
+   
     
 });
 

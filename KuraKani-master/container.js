@@ -10,6 +10,9 @@ const simpleDependecies = [
     ['validator', 'express-validator'],
     ['async','async'],
     ['Club','./models/clubs'],
+    ['Users','./models/user'],
+    ['Message','./models/message'],
+    ['group', './models/groupmessage'],
     ['aws','./helpers/AWSUpload'],
   
 ];
